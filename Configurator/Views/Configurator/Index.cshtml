@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+    <link href="~/Content/Index.css" rel="stylesheet" />
+</head>
+<h3>Welcome to Fashion Configurator and configure your own outfit! </h3>
+
+<div class="row" >
+    <div class="col-md-4 functions">
+        <i class="fa fa-cogs fa-4x" aria-hidden="true"></i><br/>
+        @Html.ActionLink("Start Configurating", "Products", "Configurator")
+</div>
+    <div class="col-md-4 functions">
+        <i class="fa fa-shopping-basket fa-4x" aria-hidden="true"></i><br />
+        
+        @Html.ActionLink("Check my Orders", "MyOrders", "Configurator")
+    </div>
+    <div class="col-md-4 functions">
+        <i class="fa fa-coffee fa-4x" aria-hidden="true"></i><br />
+       
+        @Html.ActionLink("For Administration", "Index", "Administration")
+    </div>
+</div>
+@Html.ActionLink("Change Password", "ChangePassword", "Account")<br />

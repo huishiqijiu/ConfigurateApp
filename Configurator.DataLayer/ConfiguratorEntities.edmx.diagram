@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ae044622015440e993399869904e44ad" Name="Diagram1">
+        <EntityTypeShape EntityType="ConfiguratorModel.FinalDesign" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConfiguratorModel.Item" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConfiguratorModel.ItemType" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConfiguratorModel.Order" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConfiguratorModel.Part" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConfiguratorModel.Product" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConfiguratorModel.User" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="ConfiguratorModel.FK_Item_ItemType" ManuallyRouted="false" />
+        <AssociationConnector Association="ConfiguratorModel.FK_ItemType_Part" ManuallyRouted="false" />
+        <AssociationConnector Association="ConfiguratorModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ConfiguratorModel.FK_Part_Product" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

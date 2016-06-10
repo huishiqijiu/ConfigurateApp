@@ -1,0 +1,44 @@
+﻿@model Configurator.ViewModels.OrdersViewModel
+
+@{
+    ViewBag.Title = "MyOrders";
+}
+
+<h2>MyOrders</h2>
+@foreach (var o in Model.UsersOrders)
+{
+    <div>
+        <span>@o.ProductCode - @o.DeliverDate.ToShortDateString()</span> <input type="button" value="Show Picture"/>
+
+    </div>
+}
+<div id="imgDiv">
+   <img id="img" />
+</div>    
+
+<script>
+    $('input').click(function () {
+        var code = $(this).siblings('span').text().substr(0, $(this).siblings('span').text().indexOf(' -')).replace(/\s/g, '');
+        console.log(code);
+        $.ajax({
+            url: "/Configurator/GetImgByteArray",
+            type: "Get",
+            data: { 'code': code },
+            contentType: "application/json",
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    $('#img').show();
+                    $('#img').attr('src', 'data:image/jpeg;base64, ' + result);
+                }                    
+                else
+                {
+                    $('#img').hide();
+                    alert('No picture for this design is available');
+                }
+
+                    
+            }
+        })
+    })
+</script>

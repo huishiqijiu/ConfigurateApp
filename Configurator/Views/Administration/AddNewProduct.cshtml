@@ -1,0 +1,39 @@
+﻿@using System.Web.Script.Serialization
+@model Configurator.ViewModels.AdminAddNewViewModel
+
+@{
+    ViewBag.Title = "AddNew";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+<script src="~/scripts/ConfigurationViewModel.js"></script>
+
+<h2>Add New Products </h2>
+
+<div id="productContainer">
+    <ul data-bind="foreach: Products">
+        <li>
+            <span data-bind="text: Name, click: ShowParts" style="cursor:pointer"></span>
+            <input value="Delete" type="button" data-bind="click: Delete" />
+        </li>
+    </ul>
+
+</div>
+
+<div id="newProductDiv">
+    <input id="newProduct" type="text" data-bind="value: Name" />
+    <input id="creatNewProduct" value="Add New Product" type="button" data-bind="click: Save" /><br />
+</div>
+
+<script>
+    var product;
+    var url;
+    var configurationViewModel;
+    var code;
+    $(document).ready(function () {
+        configurationViewModel = new ConfigurationViewModel(@Html.Raw(data));
+        ko.applyBindings(configurationViewModel, $("#productContainer")[0]);
+        product = new NewProductModel();
+        ko.applyBindings(product, $('#newProductDiv')[0]);
+        url = '@Url.Action("AddNewPart", "Administration")';
+    });
+</script>

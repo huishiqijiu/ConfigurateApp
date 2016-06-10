@@ -1,0 +1,51 @@
+﻿@model Configurator.ViewModels.AdminItemsViewModel
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "Items";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+
+<script src="~/scripts/KOItemViewModel.js"></script>
+<h2>Items</h2>
+<style>
+    .itemParent >input {
+    display: none;
+}
+    .itemParent:hover >input{
+        display: inline;
+    }
+</style>
+<div id="itemContainer">
+    
+    <div style="display: inline">
+        <span data-bind="text: ProductName, click: ShowProducts"></span><span> > </span>
+        <span data-bind="text: PartName, click: ShowParts"></span><span> > </span>
+        <span data-bind="text: ItemTypeName, click: ShowItemTypes"></span><span> > Items</span>
+    </div>
+    <span id="itemTypeId" data-bind="text:ItemTypeId" hidden></span>
+    <ul data-bind="foreach: Items">
+        <li class="itemParent">
+            <span data-bind="text: Name"></span><input value="Save" type="button" data-bind="click: saveItem"/>
+        </li>
+    </ul>    
+</div>
+
+
+
+<script>
+    var urlItemType;
+    var urlPart;
+    var urlProduct;
+
+    var koItemViewModel;
+    $(document).ready(function () {
+        koItemViewModel = new KOItemViewModel(@Html.Raw(data));
+        ko.applyBindings(koItemViewModel, $("#itemContainer")[0]);
+        urlItemType = '@Url.Action("ItemTypes", "Configurator")';
+        urlPart = '@Url.Action("Parts", "Configurator")';
+        urlProduct = '@Url.Action("Products", "Configurator")';
+
+
+    });
+</script>
+

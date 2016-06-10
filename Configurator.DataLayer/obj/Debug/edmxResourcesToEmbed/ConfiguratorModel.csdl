@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProductConfiguratorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ProductConfiguratorEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Items" EntityType="ProductConfiguratorModel.Item" />
+    <EntitySet Name="ItemTypes" EntityType="ProductConfiguratorModel.ItemType" />
+    <EntitySet Name="Orders" EntityType="ProductConfiguratorModel.Order" />
+    <EntitySet Name="Parts" EntityType="ProductConfiguratorModel.Part" />
+    <EntitySet Name="Products" EntityType="ProductConfiguratorModel.Product" />
+    <EntitySet Name="sysdiagrams" EntityType="ProductConfiguratorModel.sysdiagram" />
+    <EntitySet Name="Users" EntityType="ProductConfiguratorModel.User" />
+    <AssociationSet Name="FK_Item_ItemType" Association="ProductConfiguratorModel.FK_Item_ItemType">
+      <End Role="ItemType" EntitySet="ItemTypes" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemType_Part" Association="ProductConfiguratorModel.FK_ItemType_Part">
+      <End Role="Part" EntitySet="Parts" />
+      <End Role="ItemType" EntitySet="ItemTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_User" Association="ProductConfiguratorModel.FK_Order_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Part_Product" Association="ProductConfiguratorModel.FK_Part_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Part" EntitySet="Parts" />
+    </AssociationSet>
+    <EntitySet Name="FinalDesigns" EntityType="ProductConfiguratorModel.FinalDesign" />
+  </EntityContainer>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ItemType" Relationship="ProductConfiguratorModel.FK_Item_ItemType" FromRole="Item" ToRole="ItemType" />
+  </EntityType>
+  <EntityType Name="ItemType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PartId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Items" Relationship="ProductConfiguratorModel.FK_Item_ItemType" FromRole="ItemType" ToRole="Item" />
+    <NavigationProperty Name="Part" Relationship="ProductConfiguratorModel.FK_ItemType_Part" FromRole="ItemType" ToRole="Part" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="DeliverDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="ProductConfiguratorModel.FK_Order_User" FromRole="Order" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Part">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ItemTypes" Relationship="ProductConfiguratorModel.FK_ItemType_Part" FromRole="Part" ToRole="ItemType" />
+    <NavigationProperty Name="Product" Relationship="ProductConfiguratorModel.FK_Part_Product" FromRole="Part" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Parts" Relationship="ProductConfiguratorModel.FK_Part_Product" FromRole="Product" ToRole="Part" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LoginEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="ProductConfiguratorModel.FK_Order_User" FromRole="User" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_Item_ItemType">
+    <End Type="ProductConfiguratorModel.ItemType" Role="ItemType" Multiplicity="1" />
+    <End Type="ProductConfiguratorModel.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ItemTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemType_Part">
+    <End Type="ProductConfiguratorModel.Part" Role="Part" Multiplicity="1" />
+    <End Type="ProductConfiguratorModel.ItemType" Role="ItemType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Part">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemType">
+        <PropertyRef Name="PartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_User">
+    <End Type="ProductConfiguratorModel.User" Role="User" Multiplicity="1" />
+    <End Type="ProductConfiguratorModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Part_Product">
+    <End Type="ProductConfiguratorModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="ProductConfiguratorModel.Part" Role="Part" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Part">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FinalDesign">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DesignCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

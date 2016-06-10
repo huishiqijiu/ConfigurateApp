@@ -1,0 +1,41 @@
+﻿@model Configurator.ViewModels.AdminItemTypesViewModel
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "ItemTypes";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+
+<script src="~/scripts/KOTypeViewModel.js"></script>
+<h2>ItemTypes</h2>
+
+<div id="typeContainer">
+    <div style="display: inline">
+        <span data-bind="text: ProductName, click: ShowProducts"></span><span> ></span>
+        <span data-bind="text: PartName, click: ShowParts"></span><span> > Item Types</span>
+        
+    </div>
+    <span id="partId" data-bind="text:PartId" hidden></span>
+    <ul data-bind="foreach: ItemTypes">
+        <li>
+            <span data-bind="text: Name, click: ShowItems"></span>
+        </li>
+    </ul>
+
+</div>
+
+
+<script>
+
+    var url;
+    var urlPart;
+    var urlProduct;
+    var koTypeViewModel;
+    $(document).ready(function () {
+        koTypeViewModel = new KOTypeViewModel(@Html.Raw(data));
+        ko.applyBindings(koTypeViewModel, $("#typeContainer")[0]);
+
+        url = '@Url.Action("Items", "Configurator")';
+        urlPart = '@Url.Action("Parts", "Configurator")';
+        urlProduct = '@Url.Action("Products", "Configurator")';
+    });
+</script>

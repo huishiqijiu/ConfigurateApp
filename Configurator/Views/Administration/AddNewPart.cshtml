@@ -1,0 +1,43 @@
+﻿@using System.Web.Script.Serialization
+@model Configurator.ViewModels.AdminPartsViewModel
+
+
+@{
+    ViewBag.Title = "AddNew";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+<script src="~/scripts/KOPartViewModel.js"></script>
+
+<h2>Add New Parts </h2>
+
+<div id="partContainer">
+    <span id="productId" data-bind="text:ProductId" hidden></span>
+    @*<span id="codeProd" data-bind="text:CodeProd" ></span>*@
+    <ul data-bind="foreach: Parts">
+        <li>            
+            <span data-bind="text: Name, click: ShowItemTypes" style="cursor:pointer"></span>
+            <input value="Delete" type="button" data-bind="click: Delete" />
+        </li>
+    </ul>
+
+</div>
+
+<div id="newPartDiv">
+    <input id="newPart" type="text" data-bind="value: Name" />
+    <input id="creatNewPart" value="Add New Part" type="button" data-bind="click: Save" /><br />
+</div>
+
+<script>
+    var part;
+    var url;
+    var koPartViewModel;
+    $(document).ready(function () {
+        koPartViewModel = new KOPartViewModel(@Html.Raw(data));
+        ko.applyBindings(koPartViewModel, $("#partContainer")[0]);
+        part = new NewPartModel();
+        ko.applyBindings(part, $('#newPartDiv')[0]);
+        url = '@Url.Action("AddNewItemType", "Administration")';
+    });
+</script>
+
+

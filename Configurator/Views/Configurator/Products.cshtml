@@ -1,0 +1,89 @@
+﻿@using System.Web.Script.Serialization
+@model Configurator.ViewModels.AdminAddNewViewModel
+
+@{
+    ViewBag.Title = "Products";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+<script src="~/scripts/ConfigurationViewModel.js"></script>
+<style>
+    /*.items{
+        display: none;
+    }
+    .itemTypeName:hover .items{
+        display: block;
+    }*/
+    #productContainer {
+        width: 70%;
+        float: left;
+    }
+
+    #selectedItemList {
+        width: 29%;
+        float: left;
+    }
+</style>
+<h2>Products</h2>
+<div id="container">
+    <input type="hidden" value="@Model.UserId" id="userID" />
+    <div id="productContainer">
+        <ul data-bind="foreach: Products">
+            <li>
+                <span data-bind="text: Name" class="productName" style="cursor:pointer"></span>
+                <ul data-bind="foreach: Parts" class="parts" style="display:none">
+                    <li >
+                        <span data-bind="text: Name" ></span>
+                        <ul data-bind="foreach: ItemTypes">
+                            <li>
+                                <span class="itemTypeName" data-bind="text: Name"></span>
+                                <ul data-bind="foreach: Items">
+                                    <li class="items">
+                                        <span class="itemCode" data-bind="text: Code" hidden></span>
+                                        <span data-bind="text: Name"></span>
+                                        <input value="Select" type="button" data-bind="click: saveItem" />
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+
+    </div>
+    <div id="selectedItemList">
+        Your shopping items: 
+        <ul data-bind="foreach: SelectedItems" id="selectedItems">
+            <li>
+                <span data-bind="text: Id" hidden></span>
+                <span data-bind="text: Name"></span>
+            </li>
+        </ul>
+        <input value="Save Order" type="button" data-bind="click: saveOrder" />
+        <span id="showMsg"></span>
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+
+<script>
+
+    var url;
+    var orderUrl;
+    var selectedItems = [];
+    var configurationViewModel;
+    var selectedItemsViewModel;
+    var newOrder;
+    $(document).ready(function () {
+        configurationViewModel = new ConfigurationViewModel(@Html.Raw(data));
+        ko.applyBindings(configurationViewModel, $("#productContainer")[0]);
+        selectedItemsViewModel = new SelectedItemsViewModel();
+        ko.applyBindings(selectedItemsViewModel, $('#selectedItemList')[0]);
+        url = '@Url.Action("Parts", "Configurator")';
+        orderUrl = '@Url.Action("MyOrders", "Configurator")';
+        $('.productName').click(function () {
+            $(this).next('.parts').toggle();
+        })
+    });
+</script>

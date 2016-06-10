@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+    <link href="~/Content/Index.css" rel="stylesheet" />
+</head>
+<h3>Welcome to administration page!</h3>
+
+<div class="row">
+    <div class="col-md-4 functions">
+        <i class="fa fa-tags fa-4x" aria-hidden="true"></i><br />
+        @Html.ActionLink("Add New Products/Parts/Items", "AddNewProduct", "Administration")
+    </div>
+    <div class="col-md-4 functions">
+        <i class="fa fa-list-ul fa-4x" aria-hidden="true"></i><br />
+
+        @Html.ActionLink("Manage Orders", "Orders", "Administration")
+    </div>
+    <div class="col-md-4 functions">
+        <i class="fa fa-picture-o fa-4x" aria-hidden="true"></i><br />
+
+        @Html.ActionLink("Add Pictures to Configurations", "AddPictures", "Administration")
+    </div>
+</div>

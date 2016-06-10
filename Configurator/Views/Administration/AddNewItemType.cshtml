@@ -1,0 +1,40 @@
+﻿@model Configurator.ViewModels.AdminItemTypesViewModel
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "AddNew";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+
+<script src="~/scripts/KOTypeViewModel.js"></script>
+<h2>Add New Item Types </h2>
+
+<div id="typeContainer">
+    <span id="partId" data-bind="text:PartId" hidden></span>
+    <ul data-bind="foreach: ItemTypes">
+        <li>
+            <script src="~/scripts/KOTypeViewModel.js"></script>
+            
+            <span data-bind="text: Name, click: ShowItems" style="cursor:pointer"></span>
+            <input value="Delete" type="button" data-bind="click: Delete" />
+        </li>
+    </ul>
+
+</div>
+
+<div id="newItemTypeDiv">
+    <input id="newItemType" type="text" data-bind="value: Name" />
+    <input id="creatNewItemType" value="Add New ItemType" type="button" data-bind="click: Save" /><br />
+</div>
+
+<script>
+    var type;
+    var url;
+    var koTypeViewModel;
+    $(document).ready(function () {
+        koTypeViewModel = new KOTypeViewModel(@Html.Raw(data));
+        ko.applyBindings(koTypeViewModel, $("#typeContainer")[0]);
+        type = new NewItemTypeModel();
+        ko.applyBindings(type, $('#newItemTypeDiv')[0]);
+        url = '@Url.Action("AddNewItem", "Administration")';
+    });
+</script>

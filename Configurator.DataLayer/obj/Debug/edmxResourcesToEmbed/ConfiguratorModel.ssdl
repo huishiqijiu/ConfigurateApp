@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProductConfiguratorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FinalDesign">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DesignCode" Type="nvarchar(max)" />
+    <Property Name="Image" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ItemTypeId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="money" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DeliveryTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PartId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TotalPrice" Type="money" Nullable="false" />
+    <Property Name="DeliverDate" Type="datetime" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Part">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LoginEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Company" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Item_ItemType">
+    <End Role="ItemType" Type="Self.ItemType" Multiplicity="1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ItemTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemType_Part">
+    <End Role="Part" Type="Self.Part" Multiplicity="1" />
+    <End Role="ItemType" Type="Self.ItemType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Part">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemType">
+        <PropertyRef Name="PartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Part_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Part" Type="Self.Part" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Part">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProductConfiguratorModelStoreContainer">
+    <EntitySet Name="FinalDesign" EntityType="Self.FinalDesign" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemType" EntityType="Self.ItemType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Part" EntityType="Self.Part" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Item_ItemType" Association="Self.FK_Item_ItemType">
+      <End Role="ItemType" EntitySet="ItemType" />
+      <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemType_Part" Association="Self.FK_ItemType_Part">
+      <End Role="Part" EntitySet="Part" />
+      <End Role="ItemType" EntitySet="ItemType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Part_Product" Association="Self.FK_Part_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Part" EntitySet="Part" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,81 @@
+﻿
+
+@model Configurator.ViewModels.AdminAddPicViewModel
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "AddPictures";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+<script src="~/scripts/KOAddPicViewModel.js"></script>
+<h2>AddPictures</h2>
+<div id="container" class="row">
+    <div class="col-sm-3">
+        Upperbody Items
+        <select id="uppItem"
+                data-bind="options: UpbodyItems,
+                       optionsText: 'Name',
+                       value: selectedUpperbodyItem,
+                       optionsCaption: 'Choose...'"></select>
+    </div>
+    <div class="col-sm-3">
+        Lowerbody Items
+        <select id="lowItem"
+                data-bind="options: LowerBodyItems,
+                       optionsText: 'Name',
+                       value: selectedLowerBodyItem,
+                       optionsCaption: 'Choose...'"></select>
+    </div>
+    <div class="col-sm-3">
+        Foot Wears
+        <select id="footItem"
+                data-bind="options: FootItems,
+                       optionsText: 'Name',
+                       value: selectedFootItem,
+                       optionsCaption: 'Choose...'"></select>
+    </div>
+    <div class="col-sm-3" id="imgForm">
+        @using (Html.BeginForm("FileUpload", "Administration", FormMethod.Post, new { enctype = "multipart/form-data", id = "imgUploadForm" }))
+        {
+            @*<span id="conbinedCode" data-bind="text: DesignCode"></span>*@
+            @Html.TextBoxFor(m => m.Design.DesignCode, new { id = "conbinedCode" })
+           
+            <label for="file">Upload Image:</label>
+            <input type="file" name="file" id="file" style="width: 100%;" />
+            <input type="button" id="btnSubmitPic" value="Upload" data-bind="" />
+        }
+
+    </div>
+    @*<input type="button" id="btnSubmitPic" value="Save Design" class="submit" data-bind="" />*@ <span id="message"></span>
+</div>
+<script>
+    var selectedItems = [];
+    var koAddPicViewModel;
+    var selectedUpperbodyItem;
+    var selectedLowerBodyItem;
+    var selectedFootItem;
+    var design;
+    $(document).ready(function () {
+        koAddPicViewModel = new KOAddPicViewModel(@Html.Raw(data));
+        ko.applyBindings(koAddPicViewModel, $("#container")[0]);
+        //design = new FinalDesignModel();
+        //ko.applyBindings(design, $('#imgUploadForm')[0]);
+        $('#btnSubmitPic').click(function () {
+            //var code1 = $('#uppItem').find(":selected").text();
+            //var code2 = $('#lowItem').find(":selected").text();
+            //var code3 = $('#footItem').find(":selected").text();
+            //console.log(code1);
+            //var conbinedCode = $('#conbinedCode').text(code1.concat(code2).concat(code3));
+
+
+            var c1 = selectedUpperbodyItem.Code() + selectedUpperbodyItem.Id();
+            var c2 = selectedLowerBodyItem.Code() + selectedLowerBodyItem.Id();
+            var c3 = selectedFootItem.Code() + selectedFootItem.Id();
+            $('#conbinedCode').val(c1.concat(c2).concat(c3).replace(/\s/g, ''));
+            $('#imgUploadForm').submit();
+
+
+        })
+
+
+    });
+</script>

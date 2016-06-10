@@ -1,0 +1,86 @@
+﻿@model Configurator.ViewModels.AdminItemsViewModel
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "AddNew";
+    string data = new JavaScriptSerializer().Serialize(Model);
+}
+
+<script src="~/scripts/KOItemViewModel.js"></script>
+<h2>Add New Items </h2>
+
+<div id="itemContainer">
+    <span id="productName" data-bind="text:ProductName" hidden></span>
+    <span id="partName" data-bind="text:PartName" hidden></span>
+    <span id="itemTypeName" data-bind="text:ItemTypeName" hidden></span>
+    <span id="itemTypeId"data-bind="text:ItemTypeId" hidden></span>
+    <ul data-bind="foreach: Items">
+        <li>
+            <span data-bind="text: Name"></span>
+            <input value="Delete" type="button" data-bind="click: Delete" />
+        </li>
+    </ul>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Item</button>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" id="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="text-align: center">New Item</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Code:</label>
+                        <div class="col-sm-8">
+                            <span data-bind="text: Code"></span>
+                            @*<input id="code" data-bind="value: Code" name="" style="width: 100%;" class="form-control" />*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Name:</label>
+                        <div class="col-sm-8">
+                            <input id="name" data-bind="value: Name" name="" style="width: 100%;" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Delivery Time:</label>
+                        <div class="col-sm-8">
+                            <input id="deliveryTime" data-bind="value: DeliveryTime" name="" style="width: 100%;" class="form-control date" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Price:</label>
+                        <div class="col-sm-8">
+                            <input data-bind="value: Price" id="price" style="width: 100%;" name="" class="form-control" />
+                        </div>
+                    </div>
+
+                   
+                    <div id="formFooter">
+                        
+                        <button type="submit" data-bind="click: Save" class="btn btn-success">Spara</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+</div>
+
+<script>
+    var item;
+  
+    var koItemViewModel;
+    $(document).ready(function () {
+        
+
+        $("#deliveryTime").datepicker();
+        koItemViewModel = new KOItemViewModel(@Html.Raw(data));
+        ko.applyBindings(koItemViewModel, $("#itemContainer")[0]);
+        item = new NewItemModel();
+        ko.applyBindings(item, $('#myModal')[0]);
+        
+        
+    });
+</script>

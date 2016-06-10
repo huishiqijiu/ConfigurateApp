@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ConfiguratorModelStoreContainer" CdmEntityContainer="ConfiguratorEntities1">
+    <EntitySetMapping Name="FinalDesigns">
+      <EntityTypeMapping TypeName="ConfiguratorModel.FinalDesign">
+        <MappingFragment StoreEntitySet="FinalDesign">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DesignCode" ColumnName="DesignCode" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="ConfiguratorModel.Item">
+        <MappingFragment StoreEntitySet="Item">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ItemTypeId" ColumnName="ItemTypeId" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemTypes">
+      <EntityTypeMapping TypeName="ConfiguratorModel.ItemType">
+        <MappingFragment StoreEntitySet="ItemType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PartId" ColumnName="PartId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="ConfiguratorModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="DeliverDate" ColumnName="DeliverDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parts">
+      <EntityTypeMapping TypeName="ConfiguratorModel.Part">
+        <MappingFragment StoreEntitySet="Part">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="ConfiguratorModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ConfiguratorModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LoginEmail" ColumnName="LoginEmail" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ConfiguratorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FinalDesign">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DesignCode" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ItemTypeId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeliveryTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PartId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TotalPrice" Type="money" Nullable="false" />
+          <Property Name="DeliverDate" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Company" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Item_ItemType">
+          <End Role="ItemType" Type="Self.ItemType" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ItemTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemType_Part">
+          <End Role="Part" Type="Self.Part" Multiplicity="1" />
+          <End Role="ItemType" Type="Self.ItemType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Part">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemType">
+              <PropertyRef Name="PartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Part_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Part" Type="Self.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConfiguratorModelStoreContainer">
+          <EntitySet Name="FinalDesign" EntityType="Self.FinalDesign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemType" EntityType="Self.ItemType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Part" EntityType="Self.Part" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Item_ItemType" Association="Self.FK_Item_ItemType">
+            <End Role="ItemType" EntitySet="ItemType" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemType_Part" Association="Self.FK_ItemType_Part">
+            <End Role="Part" EntitySet="Part" />
+            <End Role="ItemType" EntitySet="ItemType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Part_Product" Association="Self.FK_Part_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Part" EntitySet="Part" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConfiguratorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FinalDesign">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DesignCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DeliveryTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemType" Relationship="Self.FK_Item_ItemType" FromRole="Item" ToRole="ItemType" />
+        </EntityType>
+        <EntityType Name="ItemType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PartId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Item_ItemType" FromRole="ItemType" ToRole="Item" />
+          <NavigationProperty Name="Part" Relationship="Self.FK_ItemType_Part" FromRole="ItemType" ToRole="Part" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DeliverDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ItemTypes" Relationship="Self.FK_ItemType_Part" FromRole="Part" ToRole="ItemType" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Part_Product" FromRole="Part" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Parts" Relationship="Self.FK_Part_Product" FromRole="Product" ToRole="Part" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Item_ItemType">
+          <End Role="ItemType" Type="Self.ItemType" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ItemTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemType_Part">
+          <End Role="Part" Type="Self.Part" Multiplicity="1" />
+          <End Role="ItemType" Type="Self.ItemType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Part">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemType">
+              <PropertyRef Name="PartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Part_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Part" Type="Self.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Part">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConfiguratorEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FinalDesigns" EntityType="Self.FinalDesign" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="ItemTypes" EntityType="Self.ItemType" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Parts" EntityType="Self.Part" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Item_ItemType" Association="Self.FK_Item_ItemType">
+            <End Role="ItemType" EntitySet="ItemTypes" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemType_Part" Association="Self.FK_ItemType_Part">
+            <End Role="Part" EntitySet="Parts" />
+            <End Role="ItemType" EntitySet="ItemTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Part_Product" Association="Self.FK_Part_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Part" EntitySet="Parts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConfiguratorModelStoreContainer" CdmEntityContainer="ConfiguratorEntities1">
+          <EntitySetMapping Name="FinalDesigns">
+            <EntityTypeMapping TypeName="ConfiguratorModel.FinalDesign">
+              <MappingFragment StoreEntitySet="FinalDesign">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DesignCode" ColumnName="DesignCode" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="ConfiguratorModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ItemTypeId" ColumnName="ItemTypeId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemTypes">
+            <EntityTypeMapping TypeName="ConfiguratorModel.ItemType">
+              <MappingFragment StoreEntitySet="ItemType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PartId" ColumnName="PartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ConfiguratorModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="DeliverDate" ColumnName="DeliverDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parts">
+            <EntityTypeMapping TypeName="ConfiguratorModel.Part">
+              <MappingFragment StoreEntitySet="Part">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ConfiguratorModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ConfiguratorModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LoginEmail" ColumnName="LoginEmail" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

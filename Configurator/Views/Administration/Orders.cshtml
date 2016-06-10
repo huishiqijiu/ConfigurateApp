@@ -1,0 +1,28 @@
+﻿@model Configurator.ViewModels.OrdersViewModel
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h2>Orders</h2>
+
+@foreach (var o in Model.AllOrders)
+{
+    <div>
+        <span>@o.ProductCode -  @o.DeliverDate</span>
+    </div>
+}
+@*<input id="sendMailBtn"/>
+<script>
+    $('#sendMailBtn').click(function () {
+        $.ajax({
+            url: "/Administration/SendEmail",
+            type: "Get",
+            data: @,
+            contentType: "application/json",
+            success: function (result) {
+                $('#img').attr('src', 'data:image/jpeg;base64, ' + result);
+            }
+        })
+    })
+</script>*@
