@@ -1,6 +1,6 @@
 # ConfigurateApp2
 
-This is a configurate web application. Registered user can log in and configure different parts together in order to form their own product.
+This is a configurate web application built on MVC and taking use of Knockoutjs on the client side. Registered user can log in and configure different parts together in order to form their own product.
 
 All the parts belongs to different types, and parts from different types can not be configured together. For example, if user is configuring a car, and has already choose tyres from type A, then only motors from type A can be available for this user. 
 
